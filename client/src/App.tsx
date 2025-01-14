@@ -85,8 +85,12 @@ const App = () => {
 
     try {
       const listResponse = await axios.get(`http://localhost:3000/${customerCode}/list`);
-      setMeasurements(listResponse.data);
-      console.log(listResponse.data);
+      setMeasurements(listResponse.data.measures);
+      console.log(measurements);
+      console.log(listResponse);
+      
+      
+      
       
     } catch (error) {
       console.error(error);

@@ -29,7 +29,7 @@ export const list = async (req: Request, res: Response) => {
 
     // Busca das medições no banco de dados
     const measures = await Picture.find(query).select(
-      "measure_uuid measure_datetime measure_type has_confirmed image_url"
+      "measure_uuid measure_value measure_datetime measure_type has_confirmed image_url"
     );
 
     // Verifica se encontrou medições
@@ -41,6 +41,7 @@ export const list = async (req: Request, res: Response) => {
       customer_code,
       measures: measures.map((measure) => ({
         measure_uuid: measure.measure_uuid,
+        measure_value: measure.measure_value,
         measure_datetime: measure.measure_datetime,
         measure_type: measure.measure_type,
         has_confirmed: measure.has_confirmed,
