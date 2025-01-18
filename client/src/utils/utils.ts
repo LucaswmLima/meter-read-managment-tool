@@ -5,4 +5,12 @@ const generateDatetime = () => {
   return isoString;
 };
 
-export { generateDatetime };
+const parseMeasureInt = (currentReading: string) => {
+  // Verifica se currentReading é uma string numérica e converte para número
+  const confirmedValue = parseInt(currentReading, 10);
+
+  
+  return confirmedValue;
+};
+
+export { generateDatetime, parseMeasureInt };

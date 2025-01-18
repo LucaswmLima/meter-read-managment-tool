@@ -1,13 +1,14 @@
 /* src/components/AddMeasurement/AddMeasurement.tsx */
 import { useState } from "react";
-import axios from "axios";
 import "./addMeasurement.css";
 import { Measurement } from "../../interfaces/measureInterface";
-import { generateDatetime } from "../../utils/utils";
 import {
   validateAddFields,
   validateConfirmFields,
 } from "../../validations/measureValidation";
+import confirmRoute from "../../api/confirmRoute";
+import addRoute from "../../api/addRoute";
+import { parseMeasureInt } from "../../utils/utils";
 
 const AddMeasurement = () => {
   const [customerCode, setCustomerCode] = useState("");
@@ -39,14 +40,10 @@ const AddMeasurement = () => {
     if (!isValid) return; // Interrompe se a validação falhar
 
     try {
-      const response = await axios.post("http://localhost:3000/add", {
-        customer_code: customerCode,
-        measure_type: measureType,
-        image: imageBase64,
-        measure_datetime: generateDatetime(),
-      });
-
+      // Faz a call de confirm para a API
+      const response = await addRoute(customerCode,measureType,imageBase64)
       console.log("Response data:", response.data);
+
       setMeasurements([...measurements, response.data]); // Adiciona a nova medição na lista
       setCurrentReading(response.data.measure_value); // Define o valor da leitura inicial
       setImageBase64(""); // Limpa a imagem carregada após o envio
@@ -64,29 +61,17 @@ const AddMeasurement = () => {
 
     try {
       // Verifica se currentReading é uma string numérica e converte para número
-      const confirmedValue = currentReading
-        ? parseInt(currentReading, 10)
-        : NaN;
-
-      if (isNaN(confirmedValue)) {
-        console.error("Invalid confirmed value");
-        return; // Evita enviar um valor inválido
-      }
-
-      console.log(uuid, confirmedValue);
-
-      const response = await axios.patch(`http://localhost:3000/confirm/`, {
-        measure_uuid: uuid,
-        confirmed_value: confirmedValue, // Envia o valor como número
-      });
-
+      const confirmedValue = parseMeasureInt(currentReading);
+      // Faz a call de confirm para a API
+      const response = await confirmRoute(uuid, confirmedValue);
       console.log("Confirmation response:", response.data);
+
       setConfirmationStatus((prevStatus) => ({
         ...prevStatus,
         [uuid]: true, // Marca como confirmado
       }));
 
-      // Após confirmar, resetar os estados para nova medição
+      // Após confirmar, reseta os estados para nova medição
       setImageBase64("");
       setCustomerCode("");
       setMeasureType("");
