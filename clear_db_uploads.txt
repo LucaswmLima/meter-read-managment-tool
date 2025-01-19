@@ -1,0 +1,13 @@
+Esvaziar a Pasta `uploads` no Container:
+
+1. Executar:
+
+- docker exec -it app_container sh
+	cd /app/src/public/uploads
+	rm -rf
+	exit
+
+2. Limpar o Banco de Dados MongoDB:
+
+	Conectar no db
+	executar: db.dropDatabase()
