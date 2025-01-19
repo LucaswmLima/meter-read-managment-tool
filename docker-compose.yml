@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongo_container
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./api  # Caminho para o seu backend
+    container_name: backend_container
+    ports:
+      - '3000:3000'
+    environment:
+      - PORT=3000
+      - DB_URI=mongodb://mongodb:27017/mydatabase
+    depends_on:
+      - mongodb
+    volumes:
+      - ./api:/app  # Ajuste o caminho para o backend
+
+  frontend:
+    build: ./client  # Caminho para o seu frontend
+    container_name: frontend_container
+    ports:
+      - '5000:80'  # Expondo na porta 5000
+    depends_on:
+      - backend
+    volumes:
+      - ./client:/app  # Ajuste o caminho para o frontend
+
+volumes:
+  mongo_data:

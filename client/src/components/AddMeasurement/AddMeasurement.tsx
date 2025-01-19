@@ -15,12 +15,12 @@ const AddMeasurement = () => {
   const [measureType, setMeasureType] = useState("");
   const [imageBase64, setImageBase64] = useState("");
   const [measurements, setMeasurements] = useState<Measurement[]>([]);
-  const [currentReading, setCurrentReading] = useState<string>(""); // Leitura que será confirmada
+  const [currentReading, setCurrentReading] = useState<string>("");
   const [confirmationStatus, setConfirmationStatus] = useState<{
     [key: string]: boolean;
-  }>({}); // Rastrea o status de confirmação por medição
-  const [confirmedMessage, setConfirmedMessage] = useState(false); // Para controlar a mensagem de confirmação
-  const [errorMessage, setErrorMessage] = useState(""); // Para exibir mensagens de erro
+  }>({});
+  const [confirmedMessage, setConfirmedMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -46,27 +46,31 @@ const AddMeasurement = () => {
       console.log("Response data:", response.data);
 
       if (response.data && response.data.valid === false) {
-        setErrorMessage(response.data.error_description || "Erro desconhecido");
+        setErrorMessage(
+          response.data.error_description || "An unexpected error occurred."
+        );
         return;
       }
 
-      setMeasurements([...measurements, response.data]); // Adiciona a nova medição na lista
-      setCurrentReading(response.data.measure_value); // Define o valor da leitura inicial
-      setImageBase64(""); // Limpa a imagem carregada após o envio
-      setCustomerCode(""); // Limpa o código do cliente
-      setMeasureType(""); // Limpa o tipo de medição
-      setErrorMessage(""); // Limpa a mensagem de erro em caso de sucesso
+      // Finaliza e limpa para proxima medicao
+      setMeasurements([...measurements, response.data]);
+      setCurrentReading(response.data.measure_value);
+      setImageBase64("");
+      setCustomerCode("");
+      setMeasureType("");
+      setErrorMessage("");
     } catch (error) {
-      // Verifique se o erro é do tipo Axios
+      // Verifica se o erro da API
       if (axios.isAxiosError(error)) {
         const errorData = error.response?.data;
-        
+
         // Verifique se os dados de erro estão disponíveis
         if (errorData && errorData.error_code) {
-          // A API retornou um erro, então defina a mensagem de erro com base na resposta da API
-          console.log('Error Code:', errorData.error_code);
-          console.log('Error Description:', errorData.error_description);
-          setErrorMessage(errorData.error_description || 'Erro desconhecido');
+          console.log("Error Code:", errorData.error_code);
+          console.log("Error Description:", errorData.error_description);
+          setErrorMessage(
+            errorData.error_description || "An unexpected error occurred."
+          );
         } else {
           // Erro Axios caso não tenha um erro específico
           setErrorMessage("Failed to confirm measurement. Please try again.");
@@ -77,7 +81,6 @@ const AddMeasurement = () => {
       }
     }
   };
-
 
   const handleConfirmMeasurement = async (uuid: string) => {
     // Valida entrada
@@ -118,13 +121,12 @@ const AddMeasurement = () => {
       // Verifique se o erro é do tipo Axios
       if (axios.isAxiosError(error)) {
         const errorData = error.response?.data;
-        
+
         // Verifique se os dados de erro estão disponíveis
         if (errorData && errorData.error_code) {
-          // A API retornou um erro, então defina a mensagem de erro com base na resposta da API
-          console.log('Error Code:', errorData.error_code);
-          console.log('Error Description:', errorData.error_description);
-          setErrorMessage(errorData.error_description || 'Erro desconhecido');
+          console.log("Error Code:", errorData.error_code);
+          console.log("Error Description:", errorData.error_description);
+          setErrorMessage(errorData.error_description || "Erro desconhecido");
         } else {
           // Erro Axios caso não tenha um erro específico
           setErrorMessage("Failed to confirm measurement. Please try again.");
@@ -164,7 +166,7 @@ const AddMeasurement = () => {
       />
       <button onClick={handleAddMeasurement}>Add</button>
 
-      {/* Exibindo a mensagem de erro */}
+      {/* Mensagem de erro */}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       {!allMeasurementsConfirmed && measurements.length > 0 && (

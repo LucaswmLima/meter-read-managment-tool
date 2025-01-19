@@ -1,9 +1,10 @@
 import React from "react";
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/footer";
 import "./App.css";
-import AddMeasurement from "./components/AddMeasurement/addMeasurement";
-import ListMeasurements from "./components/ListMeasurements/listMeasurements";
+import AddMeasurement from "./components/AddMeasurement/AddMeasurement";
+import ListMeasurements from "./components/ListMeasurements/ListMeasurements";
+import Footer from "./components/Footer/Footer";
+
 
 const App = () => {
   const [view, setView] = React.useState("add");
@@ -13,11 +14,11 @@ const App = () => {
       <Header setView={setView} />
 
       <main className="main-content">
-        {view === "add" && <AddMeasurement />}
-        {view === "list" && <ListMeasurements />}
+        {view === "add" && <AddMeasurement/>}
+        {view === "list" && <ListMeasurements/>}
       </main>
 
-      <Footer />
+      <Footer/>
     </div>
   );
 };
