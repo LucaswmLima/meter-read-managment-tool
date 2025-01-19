@@ -1,55 +1,93 @@
 .list-measurements {
-    width: 100%;
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .list-measurements ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .list-measurements li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .list-measurements li img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-  
-  .list-measurements li .measurement-info {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-  }
-  
-  .list-measurements li .measurement-info span {
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .list-measurements li button {
-    padding: 8px 12px;
-    background-color: #ff5722;
-    color: white;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .list-measurements li button:hover {
-    background-color: #e64a19;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.list-measurements h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #333;
+}
+
+.list-measurements .search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.list-measurements input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.list-measurements button {
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list-measurements button:hover {
+  background-color: #45a049;
+}
+
+.list-measurements ul {
+  list-style: none;
+  padding: 0;
+}
+
+.list-measurements li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #fff;
+}
+
+.list-measurements li img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.list-measurements li p {
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  margin: 5px 0;
+}
+
+.error-message {
+  color: red !important;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.list-measurements li img {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
