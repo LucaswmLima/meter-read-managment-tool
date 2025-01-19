@@ -163,6 +163,8 @@ const AddMeasurement = () => {
         accept="image/*"
         key={imageBase64}
         onChange={handleImageUpload}
+        
+        className="img-input"
       />
       <button onClick={handleAddMeasurement}>Add</button>
 
@@ -171,15 +173,24 @@ const AddMeasurement = () => {
 
       {!allMeasurementsConfirmed && measurements.length > 0 && (
         <div className="measurement-list">
-          <h3>Confirm Measurements</h3>
+          <h3>Confirm Measurement</h3>
           {measurements.map((measurement) => (
             <div key={measurement.measure_uuid} className="measurement-item">
               {confirmationStatus[measurement.measure_uuid] ? (
                 <p style={{ color: "green" }}>Measurement Confirmed!</p>
               ) : (
                 <>
+                  <img
+                    src={`http://localhost:3000${measurement.image_url}`}
+                    alt="Measurement"
+                    onError={(e) => {
+                      const sibling = e.currentTarget
+                        .nextElementSibling as HTMLElement;
+                      e.currentTarget.style.display = "none"; // Oculta a imagem
+                      sibling.style.display = "block"; // Mostra o texto
+                    }}
+                  />
                   <p>Measure Value: {measurement.measure_value}</p>
-                  <p>Image URL: {measurement.image_url}</p>
                   <p>
                     Confirmation Status:{" "}
                     {confirmationStatus[measurement.measure_uuid]
@@ -192,7 +203,7 @@ const AddMeasurement = () => {
                     value={currentReading ?? measurement.measure_value}
                     onChange={(e) => setCurrentReading(e.target.value)}
                   />
-                  <button
+                  <button className="confirm-button"
                     onClick={() =>
                       handleConfirmMeasurement(measurement.measure_uuid)
                     }

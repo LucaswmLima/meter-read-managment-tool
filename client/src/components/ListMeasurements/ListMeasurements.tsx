@@ -53,7 +53,7 @@ const ListMeasurements = () => {
       <div className="search-container">
         <input
           type="text"
-          placeholder="Enter Customer Code"
+          placeholder="Customer Code"
           value={customerCode}
           onChange={(e) => setCustomerCode(e.target.value)}
         />

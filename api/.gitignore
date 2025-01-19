@@ -1,3 +1,3 @@
 node_modules
-api/src/public/uploads/*
-api/.env
+src/public/*
+.env
