@@ -3,7 +3,7 @@ import Header from "./components/Header/Header";
 import "./App.css";
 import AddMeasurement from "./components/AddMeasurement/AddMeasurement";
 import ListMeasurements from "./components/ListMeasurements/ListMeasurements";
-import Footer from "./components/Footer/Footeer";
+import Footer from "./components/Footer/Footer";
 
 
 const App = () => {
