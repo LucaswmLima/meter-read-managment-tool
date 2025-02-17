@@ -82,7 +82,7 @@ const ListMeasurements = () => {
               <p>Value: {measure.measure_value}</p>
               <p>UUID: {measure.measure_uuid}</p>
               <p>
-                Confirmation Status: {measure.confirmation_status || "Pending"}
+                Confirmation Status: {measure.has_confirmed ? "Confirmed" : "Pending"}
               </p>
             </li>
           ))}
