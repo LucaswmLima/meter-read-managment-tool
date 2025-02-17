@@ -143,6 +143,8 @@ const AddMeasurement = () => {
     (measurement) => confirmationStatus[measurement.measure_uuid]
   );
 
+  const imageUrlBase = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
   return (
     <div className="add-measurement">
       <h2>Add Measurement</h2>
@@ -181,7 +183,7 @@ const AddMeasurement = () => {
               ) : (
                 <>
                   <img
-                    src={`http://localhost:3000${measurement.image_url}`}
+                    src={`${imageUrlBase}${measurement.image_url}`}
                     alt="Measurement"
                     onError={(e) => {
                       const sibling = e.currentTarget

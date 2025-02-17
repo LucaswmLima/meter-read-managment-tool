@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./listMeasurements.css";
 import { Measurement } from "../../interfaces/measureInterface";
+import listRoute from "../../api/listRoute";
 
 const ListMeasurements = () => {
   const [customerCode, setCustomerCode] = useState("");
@@ -16,9 +17,7 @@ const ListMeasurements = () => {
     }
   
     try {
-      const response = await axios.get<{ measures: Measurement[] }>(
-        `http://localhost:3000/${customerCode}/list/`
-      );
+      const response = await listRoute(customerCode)
       setMeasurements(response.data.measures || []);
       setErrorMessage(""); // Limpa a mensagem de erro em caso de sucesso
     } catch (error) {
@@ -45,6 +44,7 @@ const ListMeasurements = () => {
     }
   };
   
+  const imageUrlBase = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   return (
     <div className="list-measurements">
@@ -67,7 +67,7 @@ const ListMeasurements = () => {
           {measurements.map((measure) => (
             <li key={measure.measure_uuid}>
               <img
-                src={`http://localhost:3000${measure.image_url}`}
+                src={`${imageUrlBase}${measure.image_url}`}
                 alt="Measurement"
                 onError={(e) => {
                   const sibling = e.currentTarget
