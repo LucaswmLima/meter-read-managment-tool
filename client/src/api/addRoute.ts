@@ -1,7 +1,8 @@
 import axios from "axios";
 import { generateDatetime } from "../utils/utils";
 
-const BASE_URL = "http://localhost:3000";
+//const BASE_URL = "http://localhost:3000";
+const BASE_URL = import.meta.env.API_URL;
 
 const addRoute = async (customerCode: string, measureType: string, imageBase64: string) => {
   const response = await axios.post(`${BASE_URL}/add/`, {
